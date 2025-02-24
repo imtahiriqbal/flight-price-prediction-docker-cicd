@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight Price Prediction</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('{{ url_for("static", filename="images/pexels-pixabay-46148.jpg") }}') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        select, input {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+            border: none;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+        button {
+            background:rgb(236, 9, 9);
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Flight Details</h2>
+        <form action="{{url_for('index')}}" method="post">
+            <label for="stops">Stops:</label>
+            <select id="stops" name="stops">
+                <option value="0">No stops</option>
+                <option value="1">One stop</option>
+                <option value="2">Two or more</option>
+            </select>
+
+            <label for="class">Class:</label>
+            <select id="class" name="class">
+                <option value="0">Economy</option>
+                <option value="1">Business</option>
+            </select>
+
+            <label for="duration">Duration:</label>
+            <input type="decimal" id="duration" name="duration" required>
+
+            <label for="days_left">Days Left:</label>
+            <input type="number" id="days_left" name="days_left" required>
+
+            <label for="airline">Airline:</label>
+            <select id="airline" name="airline">
+                <option value="AirAsia">AirAsia</option>
+                <option value="Air_India">Air India</option>
+                <option value="GO_FIRST">GO FIRST</option>
+                <option value="Indigo">Indigo</option>
+                <option value="SpiceJet">SpiceJet</option>
+                <option value="Vistara">Vistara</option>
+            </select>
+
+            <label for="source">Source:</label>
+            <select id="source" name="source">
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Mumbai">Mumbai</option>
+            </select>
+
+            <label for="destination">Destination:</label>
+            <select id="destination" name="destination">
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Mumbai">Mumbai</option>
+            </select>
+
+            <label for="departure">Departure Time:</label>
+            <select id="departure" name="departure">
+                <option value="Afternoon">Afternoon</option>
+                <option value="Early_Morning">Early Morning</option>
+                <option value="Evening">Evening</option>
+                <option value="Late_Night">Late Night</option>
+                <option value="Morning">Morning</option>
+                <option value="Night">Night</option>
+            </select>
+
+            <label for="arrival">Arrival Time:</label>
+            <select id="arrival" name="arrival">
+                <option value="Afternoon">Afternoon</option>
+                <option value="Early_Morning">Early Morning</option>
+                <option value="Evening">Evening</option>
+                <option value="Late_Night">Late Night</option>
+                <option value="Morning">Morning</option>
+                <option value="Night">Night</option>
+            </select>
+
+            <input type="submit" value="Submit">
+           
+            <div style="margin-top:10px;">
+                <b>{{ prediction_text }}</b>
+            </div>
+            
+        </form>
+    </div>
+</body>
+</html>

@@ -3,7 +3,7 @@ name: Deploy Flask App to Heroku using Docker
 on:
   push:
     branches:
-      - main  # Change if using a different branch for deployment
+      - master  # Change if using a different branch for deployment
 
 jobs:
   deploy:

@@ -40,7 +40,7 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
         run: |
-          heroku container:release web --app $HEROKU_APP_NAME
+          git push heroku main
 
       - name: Scale Dynos (Optional)
         env:

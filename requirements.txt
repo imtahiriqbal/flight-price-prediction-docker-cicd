@@ -2,4 +2,4 @@ Flask
 numpy
 bz2file
 gunicorn
-sklearn
+scikit-learn

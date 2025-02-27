@@ -18,23 +18,30 @@ jobs:
         with:
           python-version: "3.10"
 
+      # Install heroku cli to run heroku commands
       - name: Install Heroku CLI
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
 
+      # Login to heroku registry and login docker
       - name: Login to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
 
+      # Set heroku app as container
+      # Build docker image (from Dockerfile)
+      # Push to heroku registry
       - name: Build and Push Docker Image
         env:
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
         run: |
+          heroku stack:set container --app $HEROKU_APP_NAME
           docker build -t registry.heroku.com/$HEROKU_APP_NAME/web .
           docker push registry.heroku.com/$HEROKU_APP_NAME/web
 
+      # Push container to web and release
       - name: Release Docker Image to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
@@ -43,9 +50,10 @@ jobs:
           heroku container:push web --app $HEROKU_APP_NAME
           heroku container:release web --app $HEROKU_APP_NAME
 
-      # - name: Scale Dynos (Optional)
-      #   env:
-      #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      #     HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-      #   run: |
-      #     heroku ps:scale web=1 --app $HEROKU_APP_NAME
+      # Scale dynos to serve app live
+      - name: Start Web Process (Scale Dynos)
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+        run: |
+          heroku ps:scale web=1 --app $HEROKU_APP_NAME
